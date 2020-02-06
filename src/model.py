@@ -21,6 +21,50 @@ from sklearn.naive_bayes import CategoricalNB
 from sklearn import tree
 
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.externals import joblib
+import os
+ 
+
+##
+global memoire_score
+
+memoire_score={}
+
+
+#def savemodel(func):
+#    "mon decorateur "
+#    def wrapper():
+#        print("<!_____________!>")
+#        func()
+#        print("<!_____________!>")
+#    return func
+#    
+def savemodel(func_to_decorate):
+    def new_func(*original_args, **original_kwargs):
+        print("Function has been decorated.  Congratulations."+str(func_to_decorate))
+        # Do whatever else you want here
+        #memoire_score[str(func_to_decorate)]=func_to_decorate(*original_args, **original_kwargs)
+        return func_to_decorate(*original_args, **original_kwargs)
+    return new_func
+
+
+
+def sauvergarde_file_optimal(clf_tree,score_tree,name_model):
+        " Call une varaible global pour voir ce qui était dans sa memoire comme modèle optimal"
+        try:
+           if score_tree>=memoire_score[name_model]:
+              joblib.dump(clf_tree, os.getcwd()+'/model/'+name_model+'.pkl')
+              memoire_score[name_model]=score_tree
+           else:
+               print("Not Max:")
+        except:
+            memoire_score[name_model]=score_tree
+            joblib.dump(clf_tree, os.getcwd()+'/model/'+name_model+'.pkl')
+            pass
+        #print(os.getcwd()+'/model/'+name_model+'.pkl')
+
+
+
 
 #Supervised learning
 
@@ -119,9 +163,10 @@ def gaussian_process_m(X_train, y_train,X_test, y_test):
 
 #def naiveBaye_m(X_train, y_train,X_test, y_test):
 #    "naaive bayes"
-
+@savemodel    
 def treeDecision_regresion_m(X_train, y_train,X_test, y_test,maxt):
     #tree Descion
+    score_tree=0
     try:
         clf_tree = tree.DecisionTreeRegressor(max_depth=maxt)
         clf_tree.fit(X_train, y_train)
@@ -130,13 +175,16 @@ def treeDecision_regresion_m(X_train, y_train,X_test, y_test,maxt):
         print(score_tree)
         y_pred=clf_tree.predict(X_test)
         print("RMSE:"+str(mean_squared_error(y_test, y_pred)))
+        "sauvegarder le modele"
+        sauvergarde_file_optimal(clf_tree,score_tree,'treeDecision_regresion_m')
     except:
-        pass    
+        pass
+    return  score_tree    
     
-# randomForestRegression
-        
+# randomForestRegression         
 def RandomForestRegressor_m(X_train, y_train,X_test, y_test,maxt):
     #tree Descion
+    score_tree=0
     try:
         clf_tree = RandomForestRegressor(max_depth=maxt, random_state=0)
         clf_tree.fit(X_train, y_train)
@@ -145,8 +193,11 @@ def RandomForestRegressor_m(X_train, y_train,X_test, y_test,maxt):
         print(score_tree)
         y_pred=clf_tree.predict(X_test)
         print("RMSE:"+str(mean_squared_error(y_test, y_pred)))
+        "sauvegarder le modele"
+        sauvergarde_file_optimal(clf_tree,score_tree,'RandomForestRegressor_m')
     except:
-        pass 
+        pass
+    return score_tree
     
 
 
@@ -168,3 +219,6 @@ def MLPregression(X_train, y_train,X_test, y_test,solver,size_hidden,activation1
         print("RMSE:"+str(mean_squared_error(y_test, yTest_predicted)))
     except:
         pass
+
+
+    

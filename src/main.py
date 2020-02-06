@@ -35,11 +35,11 @@ from model import *
 from random import sample 
 
 
-
+name_data="data/labeled_dataset.csv"
 
 get_ipython().run_line_magic('matplotlib', 'inline')
 
-train= pd.read_csv("data/labeled_dataset_axaggpdsc.csv")
+train= pd.read_csv(name_data)
 
 
 # In[97]:
