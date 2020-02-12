@@ -13,8 +13,11 @@ labeled_dataset.csv et de reussir à faire une très bonne prédiction sur le fi
 
 - [Tache 1]()
 1 utiliser un decorateur pour modifier la fonction qui execute le modèle
-- [tache 2]()
+- [Tache 2]()
 2 sauvergarder le modèle optimale
+- [Tache 3]()
+3 faire des predictions et sauvegrarde dans un fichier
+
 
 ## Metrique
 dans ce projet la metrique pour evaluer les models est le RMSE et l'indice de GINI

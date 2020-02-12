@@ -1,0 +1,1 @@
+{'RandomForestRegressor_m': 0.9809737110218265, 'treeDecision_regresion_m': 0.9500326813546562, 'MLPregression': 0.11150372982568213, 'AdaBoostRegressor_m': 0.9399192480045229, 'KNeighborsRegressor_m': -0.18361825102236337, 'linear_model_OLS': 0.20853676016094336, 'BayesianRidge_m': 0.17615575727338362, 'SGDRegressor_m': -9624.801153550221, 'svm_m': 0.01751114737599002}
